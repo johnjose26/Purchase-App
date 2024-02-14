@@ -25,44 +25,50 @@
     position: relative;
     z-index: 10;
   }
-  h3 {
-    font-size: 20px;
-    font-weight: 600;
-    margin: 0 0 20px 0;
+ 
+}
+ 
+h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 20px 0;
+}
+.form-group {
+  margin-bottom: 15px;
+  .form-label {
+    font-size: 12px;
   }
-  .form-group {
-    margin-bottom: 15px;
-    .form-label {
-      font-size: 12px;
-    }
-    .form-control {
-      width: 100%;
-      border: none;
-      border-bottom: 1px solid var(--color-border);
-      border-radius: 0;
-      min-height: 34px;
-      padding: 0;
-      &:focus {
-        outline: none;
-        box-shadow: none;
-        border-bottom: blue 1px solid;
-      }
-    }
-  }
-  .btn-primary {
-    background-color: var(--color-primary);
+  .form-control {
+    width: 100%;
     border: none;
-    border-radius: 10px;
-    min-height: 40px;
-    padding: 0 20px;
-    color: var(--color-white);
-    cursor: pointer;
-  }
-  a {
-    color: var(--color-bg);
-    text-decoration: none;
-    &:hover {
-      text-decoration: underline;
+    border-bottom: 1px solid var(--color-border);
+    border-radius: 0;
+    min-height: 34px;
+    padding: 0;
+    &:focus {
+      outline: none;
+      box-shadow: none;
+      border-bottom: 1px solid blue;
     }
   }
 }
+.btn-primary {
+  background-color: var(--color-primary);
+  border: none;
+  border-radius: 10px;
+  min-height: 40px;
+  padding: 0 20px;
+  color: var(--color-white);
+  cursor: pointer;
+}
+a {
+  color: var(--color-bg);
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+  &:active{
+    text-decoration: underline;
+  }
+}
+ 

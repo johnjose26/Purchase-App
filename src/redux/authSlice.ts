@@ -50,16 +50,11 @@ export const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(login.fulfilled, (state, action) => {
-        // console.log(action);
         state.userDetails = action?.payload?.data?.data;
         state.jwt = action?.payload?.data?.jwt;
       })
 
-      .addCase(signup.fulfilled, (state, action) => {
-        // console.log(action);
-        state.userDetails = action?.payload?.data?.data;
-
-      })
+    
 
   },
 

@@ -53,16 +53,12 @@ RouteAuth.post("/login", (req, res) => {
  
 // signup route
 RouteAuth.post("/signup", (req, res) => {
-    const { username } = req.body;
+    const { username, type=2, name, password, status=1, resetId=null, resetValidTo = null } = req.body;
     UserModel.findOne({ username }).then((found) => {
         if (found) {
             response403(res, `User already exists!`);
         } else {
-            const {
-                name,
-                username,
-                password
-            } = req.body;
+           
             const { encryption } = decipher({ password });
             const guid = generateGuid();
             UserModel.create({
@@ -70,10 +66,10 @@ RouteAuth.post("/signup", (req, res) => {
                 name,
                 username,
                 password: encryption,
-                status: 1,
-                resetId: null,
-                resetValidTo: null,
-                type: 2,
+                status,
+                resetId,
+                resetValidTo,
+                type,
             }).then((document) => {
                 if (document) {
                     response200(res, `User added`, {
@@ -81,8 +77,8 @@ RouteAuth.post("/signup", (req, res) => {
                             guid,
                             name,
                             username,
-                            status: 1,
-                            type: 2,
+                            status,
+                            type,
                         },
                     });
                 } else {
@@ -92,7 +88,7 @@ RouteAuth.post("/signup", (req, res) => {
         }
     });
 });
- 
+
 // verify token route
 RouteAuth.get("/verify-token", (req, res) => {
     if (validateToken(req)) {
