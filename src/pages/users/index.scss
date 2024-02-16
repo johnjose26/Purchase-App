@@ -1,3 +1,5 @@
+
+
 .user-box {
     width: 1100px;
     margin: auto;
@@ -29,9 +31,9 @@
             align-items: center;
             cursor: pointer;
         }
- 
-     
- 
+
+      
+
     }
  
     .name-action-container {
@@ -53,15 +55,6 @@
  
     }
  
-    // .user-list-container {
-    //     display: flex;
-    //     justify-content: space-between;
- 
-    //     .material-symbols-outlined {
-    //         color: red;
-    //     }
-    // }
- 
     .th-guid .th-div {
  
         text-align: right;
@@ -72,15 +65,27 @@
     .td-guid {
         text-align: right;
     }
- 
- 
+
 }
  
 .form-add-edit-user-modal{
     .modal-content{
+        
         background: white;
         border-radius: 30px;
+        width: 360px;
     }
+
+  
+}
+.toast-container{
+    width:200px;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top:0;
+    left:500px;
+    z-index: 30;
 }
  
 @media screen and (max-width: 1024px) {
@@ -93,7 +98,7 @@
 @media screen and (max-width: 768px) {
     .user-box {
         width: 100%;
- 
+
         .td-username{
             // width:50px;
         //  background: red;

@@ -48,14 +48,14 @@ const PageLogin = () => {
                 <h3>Login</h3>
                 <label className='form-group'>
                     <div className='form-label'>Username</div>
-                    <input className='form-control' type="text" value={username} onChange={e=>dispatch({username:e?.target?.value})} placeholder="Username" required />
+                    <input className='form-control' type="email" value={username} onChange={e=>dispatch({username:e?.target?.value})} placeholder="Username" required />
                 </label>
                 <label className='form-group'>
                     <div className='form-label'>Password</div>
                     <input className='form-control password' type="password" value={password} onChange={e=>dispatch({password:e?.target?.value})} placeholder="Password" required />                    
                 </label>
                 <div className='login-footer'>
-                    <Link to="/signup">Signup</Link>
+                    <Link to="/signup">Signup </Link>
                 <button className='btn-primary' type="submit">Login</button> 
                 </div>
             </form>

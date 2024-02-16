@@ -7,17 +7,21 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks.ts';
 
 
 const Header = () => {
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const { userDetails } = useAppSelector((state) => state.auth);
-    const navigate=useNavigate();
     console.log(userDetails);
 
+const handleLogOut = ()=> {
+    dispatch(logOut())
+    setTimeout( () => {
+        navigate('/');
+    }, 100)
 
-    const handleLogout=()=>{
-        dispatch(logOut())
-        navigate('/')
-    }
+   
+}
 
+ 
     return (
         <div className='header-wrap'>
             <div className='logo-container'>
@@ -34,7 +38,7 @@ const Header = () => {
                             <div className='dropDown-box'>
                                 <span className="material-symbols-outlined">account_circle</span>
                                 <h6> {userDetails.username} </h6> <br />
-                                <button className='btn-primary' onClick={handleLogout}>Logout</button>
+                                <button className='btn-primary' onClick={handleLogOut}>Logout</button>
                             </div>
                         </DropdownButton>
                         </li>

@@ -23,11 +23,25 @@
   }
   .page{
     position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     z-index: 10;
+
+    section{
+      overflow: hidden;
+      flex: 1;
+    }
   }
+
  
+  
 }
- 
+
+.modal-content{
+  margin: auto;
+}
+
 h3 {
   font-size: 20px;
   font-weight: 600;
@@ -71,4 +85,3 @@ a {
     text-decoration: underline;
   }
 }
- 

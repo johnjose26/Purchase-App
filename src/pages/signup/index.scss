@@ -9,17 +9,16 @@
     .logo-container {
         width: 300px;
     }
-   
+ 
 }
- 
- 
 
- 
+
 @media screen and (max-width:1024px) {
     .signup-wrap {
         flex-direction: column;
-        justify-content: space-around;
-      
+        justify-content: center;
+        gap: 20px;
+        
         .logo-container {
             width: 200px;
             display: flex;
@@ -32,14 +31,13 @@
        
     }
 }
- 
+
 @media screen and (max-width:768px) {
     .signup-wrap {
         justify-content: flex-start;
         .logo-container {
             height: 150px;
         }
-      
+        
     }
 }
- 

@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import PageSignup from './pages/signup/index.tsx';
 import PageDashboard from './pages/dashboard/index.tsx';
 import PageProducts from './pages/products/index.tsx';
-import PagePurchases from './pages/purchases';
+import PagePurchases from './pages/purchases/index.tsx';
 import Layout from './pages/layout/index.tsx';
 import PageUsers from './pages/users/index.tsx';
 

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchHandler } from "./handleFetch.ts";
+import { logOut } from "./authSlice.ts";
 
 export interface User {
    guid: string;
@@ -8,9 +9,6 @@ export interface User {
    username: string;
   
 }
-
-
-
 
 interface InitialState {
    userList: Array<User>
@@ -23,9 +21,8 @@ export const getUsers = createAsyncThunk("getUsers", async (_, state : any) => {
   return fetchHandler(state,"http://localhost:8085/users/list","GET", {} );
 })
 
-
-export const deleteUser = createAsyncThunk("deleteUser", async (guid, state : any) => {
-   return fetchHandler(state,"http://localhost:8085/users/remove","DELETE",{guid} );
+export const deleteUser =  createAsyncThunk("deleteUser", async (guid, state : any) => {
+   return fetchHandler(state,`http://localhost:8085/users/remove`,"DELETE", {guid} );
  })
 
 
@@ -34,7 +31,7 @@ export const userSlice = createSlice({
    initialState,
 
    reducers: {
-     
+
    },
 
    extraReducers: (builder) => {
@@ -43,7 +40,8 @@ export const userSlice = createSlice({
             console.log(action);
             state.userList = action?.payload?.data?.data;
          })
-
+       
+         
    },
 
 })

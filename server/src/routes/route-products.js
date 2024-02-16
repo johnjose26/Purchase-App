@@ -108,39 +108,33 @@ RouteProducts.post("/edit", (req, res) => {
                 req.body;
             ProductModel.findOne({ guid }).then((foundGuid) => {
                 if (foundGuid) {
-                    ProductModel.findOne({ name }).then((foundName) => {
-                        if (foundName) {
-                            response403(res, `Product name already exists!`);
-                        } else {
-                            ProductModel.updateOne(
-                                { guid },
-                                {
-                                    $set: {
-                                        name,
-                                        details,
-                                        image,
-                                        count,
-                                        rating,
-                                        status,
-                                    },
-                                }
-                            ).then((document) => {
-                                if (document) {
-                                    response200(res, `Product updated`, {
-                                        data: {
-                                            guid,
-                                            name,
-                                            details,
-                                            image,
-                                            count,
-                                            rating,
-                                            status,
-                                        },
-                                    });
-                                } else {
-                                    response403(res, `Product not updated!`);
-                                }
+                    ProductModel.updateOne(
+                        { guid },
+                        {
+                            $set: {
+                                name,
+                                details,
+                                image,
+                                count,
+                                rating,
+                                status,
+                            },
+                        }
+                    ).then((document) => {
+                        if (document) {
+                            response200(res, `Product updated`, {
+                                data: {
+                                    guid,
+                                    name,
+                                    details,
+                                    image,
+                                    count,
+                                    rating,
+                                    status,
+                                },
                             });
+                        } else {
+                            response403(res, `Product not updated!`);
                         }
                     });
                 } else {

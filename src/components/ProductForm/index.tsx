@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Toast from 'react-bootstrap/Toast';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks.ts';
 import { addProduct, editProduct, getProducts } from '../../redux/productSlice.ts';
-import { ProductItem } from '../../redux/productSlice.ts';
+
 
 interface State {
     name: string;
@@ -35,17 +35,17 @@ const initialState: State = {
 }
 
 
-const ProductForm = ({ onHide = () => { }, guid }) => {
+const ProductForm = ({ onHide = () => { }, guid, toast, toastMessage }) => {
 
-    console.log(guid);
+    // console.log(guid);
 
     const [state, dispatch] = useReducer(reducer, initialState);
     const { name, details, image, imageName, count } = state;
-    const [showToast, setShowToast] = useState<boolean>(false);
+    
     const reduxDispatch = useAppDispatch();
-    const [productList] = useAppSelector(state => state.products.productList);
-    console.log(productList);
-
+    const productList = useAppSelector((state) => state.products.productList);
+    // console.log(productList);
+    const imgUrl = "http://localhost:8085/";
 
 
     const handleProductSubmit = (e) => {
@@ -54,15 +54,17 @@ const ProductForm = ({ onHide = () => { }, guid }) => {
 
         if (guid) {
 
-            reduxDispatch(editProduct({ guid, name, image, imageName, details, count }))
+            reduxDispatch(editProduct({ guid, name, details, count }))
                 .then(data => {
 
                     if (data.payload.data.status === 200) {
                         onHide();
                         reduxDispatch(getProducts())
-                        setShowToast(true);
+                        toastMessage("Product Edited");
+                        toast();
+                      
                         setTimeout(() => {
-                            setShowToast(false);
+                            toast(false);
 
                         }, 2000);
 
@@ -74,11 +76,13 @@ const ProductForm = ({ onHide = () => { }, guid }) => {
                 .then(data => {
 
                     if (data.payload.data.status === 200) {
+
                         onHide();
                         reduxDispatch(getProducts())
-                        setShowToast(true);
+                        toastMessage("Product Added");
+                        toast();
                         setTimeout(() => {
-                            setShowToast(false);
+                            toast(false);
 
                         }, 2000);
 
@@ -89,20 +93,20 @@ const ProductForm = ({ onHide = () => { }, guid }) => {
 
     }
 
-    // useEffect(() => {
-    //     if (guid) {
-    //         const product = productList.find(item => item.guid === guid);
-    //         if (product) {
-    //             dispatch({
-    //                 name: product.name,
-    //                 details: product.details,
-    //                 count: product.count,
-    //                 image: product.image,
-    //                 imageName: product.imageName
-    //             });
-    //         }
-    //     }
-    // }, [guid, productList]);
+    useEffect(() => {
+        if (guid) {
+            const product = productList.find((product) => product.guid === guid);
+            if (product) {
+                dispatch({
+                    name: product.name,
+                    details: product.details,
+                    count: product.count,
+                    image: `${imgUrl}${product.image}`,
+                    imageName: product.imageName
+                });
+            }
+        }
+    }, [guid, productList]);
 
 
     function readFile(file) {
@@ -110,7 +114,7 @@ const ProductForm = ({ onHide = () => { }, guid }) => {
         const FR = new FileReader();
 
         FR.addEventListener("load", function (evt) {
-            dispatch({ image: evt.target.result });
+            dispatch({ image: evt?.target?.result });
 
         });
 
@@ -121,7 +125,7 @@ const ProductForm = ({ onHide = () => { }, guid }) => {
 
     const handleImage = (e) => {
         const file = e.target.files[0];
-        console.log(file);
+        // console.log(file);
         const filename = file.name;
         dispatch({ imageName: filename });
         // console.log(filename);
@@ -131,21 +135,21 @@ const ProductForm = ({ onHide = () => { }, guid }) => {
 
 
 
-    console.log(image);
+    // console.log(image);
 
     return (
 
         <>
-
             <form className='signup-box' onSubmit={handleProductSubmit}>
-                <h3> Add Product </h3>
+                {guid ? <h3> Edit Product </h3> : <h3> Add Product </h3>}
                 <label className='form-group'>
                     <div className='form-label'>  Name </div>
                     <input className='form-control' type="text" value={name} onChange={e => dispatch({ name: e?.target?.value })} placeholder="Name" required />
                 </label>
                 <label className='form-group'>
                     <div className='form-label'>  Image </div>
-                    <input className='form-control password' type="file" onChange={handleImage} placeholder="" />
+                    {guid ? <img src={image} alt={image} style={{ maxWidth: "100px" }} /> :
+                        <input className='form-control password' type="file" onChange={handleImage} placeholder="" />}
                 </label>
                 <label className='form-group'>
                     <div className='form-label'>  Details </div>
@@ -159,19 +163,16 @@ const ProductForm = ({ onHide = () => { }, guid }) => {
 
                 <div className='signup-footer'>
 
-                    <button className='btn-primary' type="submit"> Add Product </button>
+                    {guid ? <button className='btn-primary' type="submit"> Edit Product </button> :
+                        <button className='btn-primary' type="submit"> Add Product </button>}
                 </div>
             </form>
 
-            <Toast className='toast-container' show={showToast} onClose={() => setShowToast(false)}>
-                <Toast.Header>
-                    <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
-                </Toast.Header>
-                <Toast.Body> Product Created </Toast.Body>
-            </Toast>
+
 
         </>
     )
 };
 
 export default ProductForm;
+

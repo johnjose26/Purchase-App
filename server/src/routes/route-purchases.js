@@ -14,11 +14,9 @@ RoutePurchases.get("/list", (req, res) => {
             PurchaseModel.aggregate([
                 {
                     $match:
-                        type === USER_TYPES.ADMIN
-                            ? {}
-                            : {
-                                  userId,
-                              },
+                    {
+                        userId,
+                    },
                 },
                 {
                     $lookup: {
@@ -63,12 +61,12 @@ RoutePurchases.get("/list", (req, res) => {
                             const userDetailsData =
                                 type === USER_TYPES.ADMIN
                                     ? {
-                                          userDetails: {
-                                              guid: userId,
-                                              name: userDetails?.name,
-                                              type: userDetails?.type,
-                                          },
-                                      }
+                                        userDetails: {
+                                            guid: userId,
+                                            name: userDetails?.name,
+                                            type: userDetails?.type,
+                                        },
+                                    }
                                     : {};
                             return {
                                 guid,

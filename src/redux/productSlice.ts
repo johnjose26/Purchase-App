@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchHandler } from "./handleFetch.ts";
 
+
 export interface ProductItem {
    guid: string;
    name: string;
@@ -8,6 +9,7 @@ export interface ProductItem {
    image: string;
    count: number;
    rating: number;
+   imageName?: string;
 }
 
 interface InitialState {
@@ -21,18 +23,18 @@ export const getProducts = createAsyncThunk("getProducts", async (_, state : any
   return fetchHandler(state,"http://localhost:8085/products/list","GET", {} );
 })
 
-export const addProduct = createAsyncThunk("addProduct", async(body:object, state: any) => {
+export const deleteProduct = createAsyncThunk("deleteProduct", async(guid, state: any) => {
+   return fetchHandler(state, "http://localhost:8085/products/remove","DELETE", {guid})
+})
+
+export const addProduct = createAsyncThunk("addProduct", async(body: object, state: any) => {
    return fetchHandler(state,"http://localhost:8085/products/add","POST", body)
 })
 
-
-export const editProduct= createAsyncThunk("editProduct", async(body:object, state: any) => {
+export const editProduct = createAsyncThunk("editProduct", async(body: object, state: any) => {
    return fetchHandler(state,"http://localhost:8085/products/edit","POST", body)
 })
 
-export const deleteProduct = createAsyncThunk("addProduct", async(guid, state: any) => {
-   return fetchHandler(state,"http://localhost:8085/products/remove","DELETE", {guid})
-})
 
 
 export const productSlice = createSlice({
@@ -46,7 +48,7 @@ export const productSlice = createSlice({
    extraReducers: (builder) => {
       builder
          .addCase(getProducts.fulfilled, (state, action) => {
-            console.log(action);
+            // console.log(action);
             state.productList = action?.payload?.data?.data;
 
          })

@@ -6,15 +6,16 @@ import Table from '../../components/table/index.tsx';
 import { User } from '../../redux/userSlice.ts';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import FormComponent from '../../components/form/index.tsx';
-
-
-
+import Form from '../../components/Form/index.tsx';
+import Toast from 'react-bootstrap/Toast';
+ 
 const PageUsers = () => {
-   
+    
     const [show, setShow] = useState<boolean>(false);
     const [showFormModal,  setShowFormModal] = useState <boolean>(false);
     const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
+    const [showToast, setShowToast] = useState<boolean>(false); 
+    const [toastMessage, setToastMessage] = useState<string|null>(null); // Toast Message
  
     const [search, setSearch] = useState(String);
  
@@ -57,11 +58,17 @@ const PageUsers = () => {
  
     const handleDelete = () => {
         if (selectedUserId) {
-            console.log(selectedUserId);
+           
             reduxDispatch(deleteUser(selectedUserId))
             .then((data) => {
                 if (data.payload.data.status === 200) {
+                    setShowToast(true);
+                    setToastMessage("User deleted");
                     reduxDispatch(getUsers());
+                    setTimeout(() => {
+                        setShowToast(false);
+
+                    }, 2000);
                     handleClose();
                 } else {
                     console.error("Failed to delete user.");
@@ -77,7 +84,7 @@ const PageUsers = () => {
  
  
     return (
- 
+
         <div className='user-box'>
             <div className='user-header-wrap'>
                 <div className='user-search-container'>
@@ -94,11 +101,11 @@ const PageUsers = () => {
  
             </div>
  
-            <Table columns={columns} data={userList}/>
+            <Table columns={columns} data={userList} />
            
             <Modal show={show} onHide={handleClose}
             >
-               
+                
                     <Modal.Header closeButton onClick={handleClose}>
                         <Modal.Title> Buy It Now </Modal.Title>
                     </Modal.Header>
@@ -111,17 +118,22 @@ const PageUsers = () => {
                         <Button variant="primary" onClick={handleDelete}> Yes </Button>
                         <Button variant="secondary" onClick={handleClose}> No </Button>
                     </Modal.Footer>
-               
+                
             </Modal>
- 
- 
-            <Modal className='form-add-edit-user-modal' show={showFormModal} onHide={toggleFormModal}>
-                <FormComponent onHide={toggleFormModal}/>
-                </Modal>
+
+
+            <Modal className='form-add-edit-user-modal' show={showFormModal} onHide={toggleFormModal} >
+                <Form onHide={toggleFormModal} toast={setShowToast} toastMessage={setToastMessage}/>
+            </Modal>
+
+            <Toast className='toast-container' show={showToast} onClose={() => setShowToast(false)}>
+                <Toast.Body> {toastMessage} </Toast.Body>
+            </Toast>
            
-        </div>
+        </div> 
  
     );
 };
  
 export default PageUsers;
+ 

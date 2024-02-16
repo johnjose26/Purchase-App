@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import './index.scss';
- 
+
 interface TableProps {
     columns: {
         label: string;
         accessor: string;
         render?: (row: any, index: number) => {
- 
+
         },
         sortable?: boolean,
         basecolumn?: boolean
@@ -14,18 +14,18 @@ interface TableProps {
     data: any[]
 }
 const Table = ({ columns, data }: TableProps) => {
- 
+
     // console.log(data);
     const [sortType, setsortType] = useState<string>("asc");
     const [sortColumn, setSortColumn] = useState<string>("");
- 
+
     useEffect(() => {
         const basecolumn = columns.find(item => {
             return item.basecolumn;
         })?.accessor || "";
         setSortColumn(basecolumn)
     }, [columns])
- 
+
     const toggleSortType = (column: any) => {
         if (sortColumn === column.accessor) {
             setsortType(sortType === 'asc' ? 'desc' : 'asc');
@@ -34,16 +34,16 @@ const Table = ({ columns, data }: TableProps) => {
             setSortColumn(column.accessor);
         }
     }
- 
+
     const renderTableColGroup = () => {
         return <colgroup>
             {columns.map(column => {
                 return <col className={`col col-${column.accessor}`} key={column.label} />
             })}
         </colgroup>
- 
+
     }
- 
+
     const renderTableHeader = () => {
         return <thead >
             <tr>
@@ -58,10 +58,10 @@ const Table = ({ columns, data }: TableProps) => {
                 })}
             </tr>
         </thead>
- 
+
     }
- 
- 
+
+
     const sortFunction = (a: any, b: any) => {
         if (sortType === 'asc') {
             return a[sortColumn].toLowerCase() > b[sortColumn].toLowerCase() ? 1 : -1
@@ -69,9 +69,9 @@ const Table = ({ columns, data }: TableProps) => {
             return b[sortColumn].toLowerCase() > a[sortColumn].toLowerCase() ? 1 : -1
         }
     }
- 
+
     const renderTableBody = () => {
- 
+
         return <tbody className='table-body'>
             {
                 data.sort(sortFunction).map((row, index) => {
@@ -79,13 +79,13 @@ const Table = ({ columns, data }: TableProps) => {
                         {columns.map(column => {
                             return <td className={`td td-${column.accessor}`} key={column.label}> {column.render ? column.render(row, index) : row[column.accessor]} </td>
                         })}
- 
+
                     </tr>
                 }
                 )}
         </tbody>
     }
- 
+
     return (
         <div className='table-wrap'>
             <table>
@@ -96,5 +96,5 @@ const Table = ({ columns, data }: TableProps) => {
         </div>
     );
 };
- 
+
 export default Table;

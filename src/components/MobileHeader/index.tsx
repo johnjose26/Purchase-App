@@ -3,23 +3,15 @@ import './index.scss';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks.ts';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import { logOut } from '../../redux/authSlice.ts';
-import { useNavigate } from 'react-router-dom';
 
 
 const MobileHeader = () => {
     const reduxDispatch = useAppDispatch();
     const { userDetails } = useAppSelector(state => state.auth);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const navigate=useNavigate();
-    const dispatch = useAppDispatch();
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
-    }
-
-    const handleLogout=()=>{
-        dispatch(logOut())
-        navigate('/');
     }
 
     return (
@@ -38,7 +30,7 @@ const MobileHeader = () => {
                             <div className='dropDown-box'>
                                 <span className="material-symbols-outlined">account_circle</span>
                                 <h6> {userDetails.username} </h6> <br /> <br />
-                                <button className='btn-primary' onClick={handleLogout}>Logout</button>
+                                <button className='btn-primary' onClick={() => reduxDispatch(logOut())}>Logout</button>
                             </div>
                         </DropdownButton> </div>
                     </div>
