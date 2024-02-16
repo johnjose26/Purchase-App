@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchHandler } from "./handleFetch.ts";
 import { ProductItem } from "./productSlice.ts";
+import { apiUrl } from "../constants.ts";
 
 
 export interface PurchaseItem {
@@ -19,11 +20,11 @@ const initialState: InitialState = { purchaseList: [] };
    
 
 export const getPurchases = createAsyncThunk("getPurchases", async (_, state : any) => {
-  return fetchHandler(state,"http://localhost:8085/purchases/list","GET", {} );
+  return fetchHandler(state,`${apiUrl}/purchases/list`,"GET", {} );
 })
 
 export const addPurchase = createAsyncThunk("addPurchase", async(body: object, state: any) => {
-   return fetchHandler(state,"http://localhost:8085/purchases/add","POST", body)
+   return fetchHandler(state,`${apiUrl}/purchases/add`,"POST", body)
 })
 
 export const purchaseSlice = createSlice({

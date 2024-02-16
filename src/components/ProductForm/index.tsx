@@ -45,7 +45,7 @@ const ProductForm = ({ onHide = () => { }, guid, toast, toastMessage }) => {
     const reduxDispatch = useAppDispatch();
     const productList = useAppSelector((state) => state.products.productList);
     // console.log(productList);
-    const imgUrl = "http://localhost:8085/";
+    const imgUrl = "https://info-shop-now.vijee.in/";
 
 
     const handleProductSubmit = (e) => {

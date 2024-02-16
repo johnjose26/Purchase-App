@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchHandler } from "./handleFetch.ts";
+import { apiUrl } from "../constants.ts";
 
 
 export interface ProductItem {
@@ -20,19 +21,19 @@ const initialState: InitialState = { productList: [] };
    
 
 export const getProducts = createAsyncThunk("getProducts", async (_, state : any) => {
-  return fetchHandler(state,"http://localhost:8085/products/list","GET", {} );
+  return fetchHandler(state,`${apiUrl}/products/list`,"GET", {} );
 })
 
 export const deleteProduct = createAsyncThunk("deleteProduct", async(guid, state: any) => {
-   return fetchHandler(state, "http://localhost:8085/products/remove","DELETE", {guid})
+   return fetchHandler(state, `${apiUrl}/products/remove`,"DELETE", {guid})
 })
 
 export const addProduct = createAsyncThunk("addProduct", async(body: object, state: any) => {
-   return fetchHandler(state,"http://localhost:8085/products/add","POST", body)
+   return fetchHandler(state,`${apiUrl}/products/add`,"POST", body)
 })
 
 export const editProduct = createAsyncThunk("editProduct", async(body: object, state: any) => {
-   return fetchHandler(state,"http://localhost:8085/products/edit","POST", body)
+   return fetchHandler(state,`${apiUrl}/products/edit`,"POST", body)
 })
 
 

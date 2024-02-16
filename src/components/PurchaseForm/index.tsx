@@ -1,7 +1,5 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import "./index.scss";
-import { Link } from 'react-router-dom';
-import Toast from 'react-bootstrap/Toast';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks.ts';
 import { addPurchase, getPurchases } from '../../redux/purchaseSlice.ts';
 
@@ -45,7 +43,7 @@ const PurchaseForm = ({onHide = ()=> {}, productId}) => {
     const reduxDispatch = useAppDispatch();
     const productList = useAppSelector((state) => state.products.productList);
     // console.log(productList);
-    const imgUrl = "http://localhost:8085/";
+    const imgUrl = "https://info-shop-now.vijee.in/";
 
 
     const handlePurchase = (e)=> {

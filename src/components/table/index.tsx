@@ -64,9 +64,9 @@ const Table = ({ columns, data }: TableProps) => {
 
     const sortFunction = (a: any, b: any) => {
         if (sortType === 'asc') {
-            return a[sortColumn].toLowerCase() > b[sortColumn].toLowerCase() ? 1 : -1
+            return a[sortColumn]?.toLowerCase() > b[sortColumn]?.toLowerCase() ? 1 : -1
         } else {
-            return b[sortColumn].toLowerCase() > a[sortColumn].toLowerCase() ? 1 : -1
+            return b[sortColumn]?.toLowerCase() > a[sortColumn]?.toLowerCase() ? 1 : -1
         }
     }
 
@@ -74,7 +74,7 @@ const Table = ({ columns, data }: TableProps) => {
 
         return <tbody className='table-body'>
             {
-                data.sort(sortFunction).map((row, index) => {
+                [...data]?.sort(sortFunction).map((row, index) => {
                     return <tr key={index}>
                         {columns.map(column => {
                             return <td className={`td td-${column.accessor}`} key={column.label}> {column.render ? column.render(row, index) : row[column.accessor]} </td>

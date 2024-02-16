@@ -13,7 +13,7 @@ import PurchaseForm from '../../components/PurchaseForm/index.tsx';
 const PageProducts = () => {
 
     const { userDetails } = useAppSelector(state => state.auth);
-    const imgUrl = "http://localhost:8085/";
+    const imgUrl = "https://info-shop-now.vijee.in/";
     const [show, setShow] = useState<boolean>(false); // Delete Modal
     const [showFormModal, setShowFormModal] = useState<boolean>(false); // Form Modal
     const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
@@ -21,7 +21,7 @@ const PageProducts = () => {
     const [search, setSearch] = useState(String);
     const [error, setError] = useState<string>("");
     const [showPurchaseFormModal, setShowPurchaseFormModal] = useState<boolean>(false);
-    const [toastMessage, setToastMessage] = useState<string|null>(null); // Toast Message
+    const [toastMessage, setToastMessage] = useState<string | null>(null); // Toast Message
     // console.log(selectedProductId);
 
 
@@ -92,8 +92,8 @@ const PageProducts = () => {
                 .then((data) => {
                     if (data.payload.data.status === 200) {
                         setShowToast(true);
-                       setToastMessage("Product deleted");
-                       
+                        setToastMessage("Product deleted");
+
                         reduxDispatch(getProducts());
                         setTimeout(() => {
                             setShowToast(false);
@@ -167,7 +167,7 @@ const PageProducts = () => {
 
             {userDetails && userDetails.type !== 1 &&
                 <Modal className='form-add-edit-purchase-modal' show={showPurchaseFormModal} onHide={togglePurchaseFormModal}>
-                    <PurchaseForm onHide={togglePurchaseFormModal} productId={selectedProductId}  />
+                    <PurchaseForm onHide={togglePurchaseFormModal} productId={selectedProductId} />
                 </Modal >}
 
             <Toast className='toast-container' show={showToast} onClose={() => setShowToast(false)}>

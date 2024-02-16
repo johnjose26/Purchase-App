@@ -1,4 +1,5 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
+import { apiUrl } from "../constants.ts";
 
 interface UserDetails {
   guid: string;
@@ -11,7 +12,7 @@ const initialUserDetails: UserDetails = {guid: '', name:'', username:'', type:0}
 
 export const login = createAsyncThunk("login",async body =>{
  
-   return await fetch("http://localhost:8085/auth/login",{
+   return await fetch(`${apiUrl}/auth/login`,{
       method:"POST",
       body:JSON.stringify(body),
        headers:{
@@ -20,7 +21,7 @@ export const login = createAsyncThunk("login",async body =>{
    })
 
    export const signup = createAsyncThunk("signup",async (body: object) =>{
-    return await fetch("http://localhost:8085/auth/signup",{
+    return await fetch(`${apiUrl}/auth/signup`,{
        method:"POST",
        body:JSON.stringify(body),
         headers:{
