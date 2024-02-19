@@ -1,6 +1,6 @@
 import React from 'react';
 import "./App.scss";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 import PageLogin from './pages/login';
 import { useSelector } from 'react-redux';
 import PageSignup from './pages/signup/index.tsx';
@@ -16,9 +16,11 @@ function App() {
   const {userDetails, jwt } = useSelector(state => state.auth);
  
   return (
+   
  
 <BrowserRouter> 
 <Routes>
+ 
   {(userDetails && jwt) ? <>
     <Route path="/" element={<Layout/>}>
       <Route index element={<PageDashboard />} />
@@ -32,8 +34,10 @@ function App() {
   <Route path="/signup" element={<PageSignup />} />
   <Route path="/*" element={<div> 404 Not found </div>} />
   </>}
+
  </Routes>
 </BrowserRouter>
+
   );
 }
 

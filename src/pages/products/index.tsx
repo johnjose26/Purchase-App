@@ -167,7 +167,7 @@ const PageProducts = () => {
 
             {userDetails && userDetails.type !== 1 &&
                 <Modal className='form-add-edit-purchase-modal' show={showPurchaseFormModal} onHide={togglePurchaseFormModal}>
-                    <PurchaseForm onHide={togglePurchaseFormModal} productId={selectedProductId} />
+                    <PurchaseForm onHide={togglePurchaseFormModal} productId={selectedProductId} toast={setShowToast} toastMessage={setToastMessage} />
                 </Modal >}
 
             <Toast className='toast-container' show={showToast} onClose={() => setShowToast(false)}>

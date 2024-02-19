@@ -33,7 +33,7 @@ const initialState: State = {
 }
  
 
-const PurchaseForm = ({onHide = ()=> {}, productId}) => {
+const PurchaseForm = ({onHide = ()=> {}, productId,toast, toastMessage}) => {
 
     // console.log(guid);
 
@@ -57,6 +57,14 @@ const PurchaseForm = ({onHide = ()=> {}, productId}) => {
 
                 if (data.payload.data.status === 200) {
                     onHide();
+                    toastMessage("Purchase Added");
+                    toast();
+                      
+                    setTimeout(() => {
+                        toast(false);
+
+                    }, 2000);
+
                     // reduxDispatch(getPurchases())
                     // setShowToast(true);
                     // setTimeout(() => {
@@ -108,16 +116,11 @@ const PurchaseForm = ({onHide = ()=> {}, productId}) => {
             <div className='signup-footer'>
                
               <button className='btn-primary' type="submit"> Add To Cart  </button>  
-             <button className='btn btn-secondary' type="submit"> Cancel </button>       
+             <button className='btn btn-secondary' type="button" onClick={onHide}> Cancel </button>       
             </div>
         </form>
 
-         {/* <Toast className='toast-container' show={showToast} onClose={() => setShowToast(false)}>
-                                        <Toast.Header>
-                                            <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
-                                        </Toast.Header>
-                                        <Toast.Body> Product Created </Toast.Body>
-         </Toast> */}
+        
 
         </>
     )
