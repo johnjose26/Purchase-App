@@ -10,7 +10,7 @@ interface TableProps {
         },
         sortable?: boolean,
         basecolumn?: boolean
-    }[];
+    }[],
     data: any[]
 }
 const Table = ({ columns, data }: TableProps) => {

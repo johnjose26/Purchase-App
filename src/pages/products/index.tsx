@@ -31,24 +31,27 @@ const PageProducts = () => {
 
     },
     { label: "Name", accessor: "name", sortable: true, basecolumn: true },
+    
+    userDetails && userDetails.type === 1 && { label: "Stock", accessor: "count", sortable: false, basecolumn: false },
 
     {
         label: "Actions", render: (row: ProductItem) => {
             return <div>
+                   <span className="material-symbols-outlined" onClick={() => {
+                        setSelectedProductId(row.guid);
+                        setShowPurchaseFormModal(true);
+
+                    }} > local_mall
+                    </span>
                 {userDetails && userDetails.type === 1 ?
                     <span className="material-symbols-outlined" onClick={() => {
                         setSelectedProductId(row.guid);
                         setShowFormModal(true);
 
                     }}> edit
-                    </span>
+                    </span>:null
 
-                    : <span className="material-symbols-outlined" onClick={() => {
-                        setSelectedProductId(row.guid);
-                        setShowPurchaseFormModal(true);
-
-                    }} > local_mall
-                    </span>}
+                  }
 
                 {userDetails && userDetails.type === 1 &&
                     <span onClick={() => {
@@ -165,10 +168,10 @@ const PageProducts = () => {
                 <ProductForm onHide={toggleFormModal} guid={selectedProductId} toast={setShowToast} toastMessage={setToastMessage} />
             </Modal >
 
-            {userDetails && userDetails.type !== 1 &&
+           
                 <Modal className='form-add-edit-purchase-modal' show={showPurchaseFormModal} onHide={togglePurchaseFormModal}>
                     <PurchaseForm onHide={togglePurchaseFormModal} productId={selectedProductId} toast={setShowToast} toastMessage={setToastMessage} />
-                </Modal >}
+                </Modal >
 
             <Toast className='toast-container' show={showToast} onClose={() => setShowToast(false)}>
                 <Toast.Body> {toastMessage} </Toast.Body>

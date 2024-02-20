@@ -3,6 +3,7 @@ import './index.scss';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks.ts';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import { logOut } from '../../redux/authSlice.ts';
+import { BrowserRouter, Routes, Route,Link } from "react-router-dom";
 
 
 const MobileHeader = () => {
@@ -46,28 +47,28 @@ const MobileHeader = () => {
                         </div>
                         <div className='menu-item-container'>
                             <div className='menu-item'>
-                                <span className="material-symbols-outlined">
+                            <Link to='/'> <span className="material-symbols-outlined">
                                     home
                                 </span>
-                                <span> Home </span>
+                                <span> Home </span></Link>
                             </div>
                             {userDetails && userDetails.type === 1 &&  ( <div className='menu-item'>
-                                <span className="material-symbols-outlined">
+                            <Link to='/users'>  <span className="material-symbols-outlined">
                                     group
                                 </span>
-                                <span> Users </span>
+                                <span> Users </span></Link>
                             </div>)}
                             <div className='menu-item'>
-                                <span className="material-symbols-outlined">
+                            <Link to='/products'> <span className="material-symbols-outlined">
                                     category
                                 </span>
-                                <span> Products </span>
+                                <span> Products </span></Link>
                             </div>
                             <div className='menu-item'>
-                                <span className="material-symbols-outlined">
+                            <Link to='/purchases'> <span className="material-symbols-outlined">
                                     local_mall
                                 </span>
-                                <span> Purchases </span>
+                                <span> Purchases </span></Link>
                             </div>
                         </div>
                     </div>

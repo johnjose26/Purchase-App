@@ -1,6 +1,6 @@
 import React from 'react';
 import "./App.scss";
-import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
+import { BrowserRouter, Routes, Route} from "react-router-dom";
 import PageLogin from './pages/login';
 import { useSelector } from 'react-redux';
 import PageSignup from './pages/signup/index.tsx';
