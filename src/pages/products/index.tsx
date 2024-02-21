@@ -19,7 +19,6 @@ const PageProducts = () => {
     const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
     const [showToast, setShowToast] = useState<boolean>(false); // Toast
     const [search, setSearch] = useState(String);
-    const [error, setError] = useState<string>("");
     const [showPurchaseFormModal, setShowPurchaseFormModal] = useState<boolean>(false);
     const [toastMessage, setToastMessage] = useState<string | null>(null); // Toast Message
     // console.log(selectedProductId);
@@ -31,27 +30,27 @@ const PageProducts = () => {
 
     },
     { label: "Name", accessor: "name", sortable: true, basecolumn: true },
-    
+
     userDetails && userDetails.type === 1 && { label: "Stock", accessor: "count", sortable: false, basecolumn: false },
 
     {
         label: "Actions", render: (row: ProductItem) => {
             return <div>
-                   <span className="material-symbols-outlined" onClick={() => {
-                        setSelectedProductId(row.guid);
-                        setShowPurchaseFormModal(true);
+                <span className="material-symbols-outlined" onClick={() => {
+                    setSelectedProductId(row.guid);
+                    setShowPurchaseFormModal(true);
 
-                    }} > local_mall
-                    </span>
+                }} > local_mall
+                </span>
                 {userDetails && userDetails.type === 1 ?
                     <span className="material-symbols-outlined" onClick={() => {
                         setSelectedProductId(row.guid);
                         setShowFormModal(true);
 
                     }}> edit
-                    </span>:null
+                    </span> : null
 
-                  }
+                }
 
                 {userDetails && userDetails.type === 1 &&
                     <span onClick={() => {
@@ -121,10 +120,7 @@ const PageProducts = () => {
         setSelectedProductId("");
     }
 
-    const toggleToast = () => {
-        setShowToast(!showToast);
-        setSelectedProductId("");
-    }
+
 
 
 
@@ -168,10 +164,10 @@ const PageProducts = () => {
                 <ProductForm onHide={toggleFormModal} guid={selectedProductId} toast={setShowToast} toastMessage={setToastMessage} />
             </Modal >
 
-           
-                <Modal className='form-add-edit-purchase-modal' show={showPurchaseFormModal} onHide={togglePurchaseFormModal}>
-                    <PurchaseForm onHide={togglePurchaseFormModal} productId={selectedProductId} toast={setShowToast} toastMessage={setToastMessage} />
-                </Modal >
+
+            <Modal className='form-add-edit-purchase-modal' show={showPurchaseFormModal} onHide={togglePurchaseFormModal}>
+                <PurchaseForm onHide={togglePurchaseFormModal} productId={selectedProductId} toast={setShowToast} toastMessage={setToastMessage} />
+            </Modal >
 
             <Toast className='toast-container' show={showToast} onClose={() => setShowToast(false)}>
                 <Toast.Body> {toastMessage} </Toast.Body>

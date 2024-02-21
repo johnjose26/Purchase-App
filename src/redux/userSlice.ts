@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchHandler } from "./handleFetch.ts";
-import { logOut } from "./authSlice.ts";
 import { apiUrl } from "../constants.ts";
 
 export interface User {
@@ -22,7 +21,7 @@ export const getUsers = createAsyncThunk("getUsers", async (_, state : any) => {
   return fetchHandler(state,`${apiUrl}/users/list`,"GET", {} );
 })
 
-export const deleteUser =  createAsyncThunk("deleteUser", async (guid, state : any) => {
+export const deleteUser =  createAsyncThunk("deleteUser", async (guid:string, state : any) => {
    return fetchHandler(state,`${apiUrl}/users/remove`,"DELETE", {guid} );
  })
 

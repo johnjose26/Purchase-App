@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import "./index.scss";
 import { useAppDispatch, useAppSelector } from '../../redux/hooks.ts';
-import { addPurchase, getPurchases } from '../../redux/purchaseSlice.ts';
+import { addPurchase } from '../../redux/purchaseSlice.ts';
 
 
 interface State{
@@ -38,8 +38,8 @@ const PurchaseForm = ({onHide = ()=> {}, productId,toast, toastMessage}) => {
     // console.log(guid);
 
     const [state, dispatch] = useReducer(reducer, initialState);
-    const { name, details, image, imageName, count  } = state;
-    const [showToast, setShowToast] = useState<boolean>(false);
+    const { name, details, image,  count  } = state;
+    // const [showToast, setShowToast] = useState<boolean>(false);
     const reduxDispatch = useAppDispatch();
     const productList = useAppSelector((state) => state.products.productList);
     // console.log(productList);
@@ -65,13 +65,17 @@ const PurchaseForm = ({onHide = ()=> {}, productId,toast, toastMessage}) => {
 
                     }, 2000);
 
-                    // reduxDispatch(getPurchases())
-                    // setShowToast(true);
-                    // setTimeout(() => {
-                    //     setShowToast(false);
-                        
-                    // }, 2000);
+                 
                     
+                }else{
+                    onHide();
+                    toastMessage(data.payload.data.message);
+                    toast();
+                    setTimeout(() => {
+                        toast(false);
+
+                    }, 2000);
+
                 }
 
             })
@@ -110,7 +114,7 @@ const PurchaseForm = ({onHide = ()=> {}, productId,toast, toastMessage}) => {
 
             <label className='form-group'>
                 <div className='form-label'> Count </div>
-                <input className='form-control password' type="number" value={count} onChange={e => dispatch({ count: e?.target?.value })} placeholder="Count" required />
+                <input className='form-control password' type="number" min={1} value={count} onChange={e => dispatch({ count: e?.target?.value })} placeholder="Count" required />
             </label> 
 
             <div className='signup-footer'>

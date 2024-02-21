@@ -24,7 +24,7 @@ export const getProducts = createAsyncThunk("getProducts", async (_, state : any
   return fetchHandler(state,`${apiUrl}/products/list`,"GET", {} );
 })
 
-export const deleteProduct = createAsyncThunk("deleteProduct", async(guid, state: any) => {
+export const deleteProduct = createAsyncThunk("deleteProduct", async(guid:string, state: any) => {
    return fetchHandler(state, `${apiUrl}/products/remove`,"DELETE", {guid})
 })
 

@@ -20,7 +20,7 @@ const Table = ({ columns, data }: TableProps) => {
     const [sortColumn, setSortColumn] = useState<string>("");
 
     useEffect(() => {
-        const basecolumn = columns.find(item => {
+        const basecolumn = columns.find(item => {     
             return item.basecolumn;
         })?.accessor || "";
         setSortColumn(basecolumn)

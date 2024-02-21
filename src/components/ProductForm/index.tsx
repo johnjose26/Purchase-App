@@ -41,7 +41,7 @@ const ProductForm = ({ onHide = () => { }, guid, toast, toastMessage }) => {
 
     const [state, dispatch] = useReducer(reducer, initialState);
     const { name, details, image, imageName, count } = state;
-    
+
     const reduxDispatch = useAppDispatch();
     const productList = useAppSelector((state) => state.products.productList);
     // console.log(productList);
@@ -62,7 +62,7 @@ const ProductForm = ({ onHide = () => { }, guid, toast, toastMessage }) => {
                         reduxDispatch(getProducts())
                         toastMessage("Product Edited");
                         toast();
-                      
+
                         setTimeout(() => {
                             toast(false);
 
@@ -80,6 +80,15 @@ const ProductForm = ({ onHide = () => { }, guid, toast, toastMessage }) => {
                         onHide();
                         reduxDispatch(getProducts())
                         toastMessage("Product Added");
+                        toast();
+                        setTimeout(() => {
+                            toast(false);
+
+                        }, 2000);
+
+                    }else{
+                        onHide();
+                        toastMessage(data.payload.data.message);
                         toast();
                         setTimeout(() => {
                             toast(false);
@@ -158,7 +167,7 @@ const ProductForm = ({ onHide = () => { }, guid, toast, toastMessage }) => {
                 </label>
                 <label className='form-group'>
                     <div className='form-label'> Count </div>
-                    <input className='form-control password' type="number" value={count} onChange={e => dispatch({ count: e?.target?.value })} placeholder="Count" required />
+                    {guid ? <input className='form-control password' min={0} type="number" value={count} onChange={e => dispatch({ count: e?.target?.value })} placeholder="Count" required /> : <input className='form-control password' min={1} type="number" value={count} onChange={e => dispatch({ count: e?.target?.value })} placeholder="Count" required />}
                 </label>
 
                 <div className='signup-footer'>
