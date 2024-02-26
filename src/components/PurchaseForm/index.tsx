@@ -1,7 +1,8 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useReducer} from 'react';
 import "./index.scss";
 import { useAppDispatch, useAppSelector } from '../../redux/hooks.ts';
 import { addPurchase } from '../../redux/purchaseSlice.ts';
+import { handleMessage,handleHide } from '../../redux/toastSlice.ts';
 
 
 interface State{
@@ -33,7 +34,7 @@ const initialState: State = {
 }
  
 
-const PurchaseForm = ({onHide = ()=> {}, productId,toast, toastMessage}) => {
+const PurchaseForm = ({onHide = ()=> {}, productId}) => {
 
     // console.log(guid);
 
@@ -57,24 +58,21 @@ const PurchaseForm = ({onHide = ()=> {}, productId,toast, toastMessage}) => {
 
                 if (data.payload.data.status === 200) {
                     onHide();
-                    toastMessage("Purchase Added");
-                    toast();
+                    reduxDispatch(handleMessage("Purchase Added"));
+                    setTimeout(()=>{
+                        reduxDispatch(handleHide());
                       
-                    setTimeout(() => {
-                        toast(false);
-
-                    }, 2000);
+                    },1000);
 
                  
                     
                 }else{
                     onHide();
-                    toastMessage(data.payload.data.message);
-                    toast();
-                    setTimeout(() => {
-                        toast(false);
-
-                    }, 2000);
+                    reduxDispatch(handleMessage(data.payload.data.message));
+                    setTimeout(()=>{
+                        reduxDispatch(handleHide());
+                       
+                    },1000);
 
                 }
 
@@ -89,7 +87,6 @@ const PurchaseForm = ({onHide = ()=> {}, productId,toast, toastMessage}) => {
                 dispatch({
                     name: product.name,
                     details: product.details,
-                    // count: product.count,
                     image: `${imgUrl}${product.image}`,
                     imageName: product.imageName
                 });

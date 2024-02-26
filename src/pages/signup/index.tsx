@@ -1,6 +1,8 @@
 import React from 'react';
-import Form from "../../components/Form/index.tsx";
 import "./index.scss";
+import Form from "../../components/form/index.tsx";
+
+
 
 const PageSignup = () => {
  
@@ -9,7 +11,7 @@ const PageSignup = () => {
             <div className='logo-container'>
                 <img src='./logo.png' alt='LOGO' />
             </div>
-            <Form />
+            <Form/>
         </div>
         
     );

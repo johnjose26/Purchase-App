@@ -1,6 +1,6 @@
 import React from 'react';
 import "./App.scss";
-import { BrowserRouter, Routes, Route} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PageLogin from './pages/login';
 import { useSelector } from 'react-redux';
 import PageSignup from './pages/signup/index.tsx';
@@ -9,34 +9,45 @@ import PageProducts from './pages/products/index.tsx';
 import PagePurchases from './pages/purchases/index.tsx';
 import Layout from './pages/layout/index.tsx';
 import PageUsers from './pages/users/index.tsx';
+import Toast from 'react-bootstrap/Toast';
+import { useAppSelector } from './redux/hooks.ts';
+// import { useAppSelector } from './redux/hooks.ts';
 
 
 function App() {
 
-  const {userDetails, jwt } = useSelector(state => state.auth);
- 
-  return (
-   
- 
-<BrowserRouter> 
-<Routes>
- 
-  {(userDetails && jwt) ? <>
-    <Route path="/" element={<Layout/>}>
-      <Route index element={<PageDashboard />} />
-      {userDetails && userDetails.type === 1 &&  <Route path="users" element={<PageUsers/>} /> }
-      <Route path="products" element={<PageProducts/>} />
-      <Route path="purchases" element={<PagePurchases />} />
-      <Route path="/*" element={<div> 404 Not found</div>} />
-    </Route>
-  </> : <>
-  <Route path="/" element={<PageLogin />} />
-  <Route path="/signup" element={<PageSignup />} />
-  <Route path="/*" element={<div> 404 Not found </div>} />
-  </>}
+  const { userDetails, jwt } = useSelector(state => state.auth);
+  const { message, visible } = useAppSelector(state => state.toast)
 
- </Routes>
-</BrowserRouter>
+  return (
+
+
+    <BrowserRouter>
+      <Routes>
+
+        {(userDetails && jwt) ? <>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<PageDashboard />} />
+            {userDetails && userDetails.type === 1 && <Route path="users" element={<PageUsers />} />}
+            <Route path="products" element={<PageProducts />} />
+            <Route path="purchases" element={<PagePurchases />} />
+            <Route path="/*" element={<div> 404 Not found</div>} />
+          </Route>
+        </> : <>
+          <Route path="/" element={<PageLogin />} />
+          <Route path="/signup" element={<PageSignup />} />
+          <Route path="/*" element={<div> 404 Not found </div>} />
+        </>}
+
+      </Routes>
+
+      {visible &&
+        <Toast className='toast-container' >
+          <Toast.Body>{message}  </Toast.Body>
+        </Toast>}
+
+
+    </BrowserRouter>
 
   );
 }

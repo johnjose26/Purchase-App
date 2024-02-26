@@ -1,9 +1,8 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import "./index.scss";
-import { Link } from 'react-router-dom';
-import Toast from 'react-bootstrap/Toast';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks.ts';
 import { addProduct, editProduct, getProducts } from '../../redux/productSlice.ts';
+import { handleMessage,handleHide } from '../../redux/toastSlice.ts';
 
 
 interface State {
@@ -35,7 +34,7 @@ const initialState: State = {
 }
 
 
-const ProductForm = ({ onHide = () => { }, guid, toast, toastMessage }) => {
+const ProductForm = ({ onHide = () => { }, guid }) => {
 
     // console.log(guid);
 
@@ -60,13 +59,14 @@ const ProductForm = ({ onHide = () => { }, guid, toast, toastMessage }) => {
                     if (data.payload.data.status === 200) {
                         onHide();
                         reduxDispatch(getProducts())
-                        toastMessage("Product Edited");
-                        toast();
-
-                        setTimeout(() => {
-                            toast(false);
-
-                        }, 2000);
+                        reduxDispatch(handleMessage("Product Edited"));
+                        setTimeout(()=>{
+                            reduxDispatch(handleHide());
+                          
+                        },1000);
+    
+                       
+                       
 
                     }
 
@@ -79,21 +79,20 @@ const ProductForm = ({ onHide = () => { }, guid, toast, toastMessage }) => {
 
                         onHide();
                         reduxDispatch(getProducts())
-                        toastMessage("Product Added");
-                        toast();
-                        setTimeout(() => {
-                            toast(false);
-
-                        }, 2000);
+                        reduxDispatch(handleMessage("Product Added"));
+                        setTimeout(()=>{
+                            reduxDispatch(handleHide());
+                          
+                        },1000);
+    
 
                     }else{
                         onHide();
-                        toastMessage(data.payload.data.message);
-                        toast();
-                        setTimeout(() => {
-                            toast(false);
-
-                        }, 2000);
+                        reduxDispatch(handleMessage(data.payload.data.message));
+                        setTimeout(()=>{
+                            reduxDispatch(handleHide());
+                           
+                        },1000);
 
                     }
 

@@ -5,6 +5,7 @@ import productreducer from './productSlice.ts';
 import purchasereducer from './purchaseSlice.ts'
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+import toastreducer from './toastSlice.ts'
 
 const persistConfig = {
   key: 'auth',
@@ -19,7 +20,8 @@ export const store = configureStore({
     auth: persistedReducer,
     users: userreducer,
     products: productreducer,
-    purchases:purchasereducer
+    purchases:purchasereducer,
+    toast:toastreducer
   }, 
   middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

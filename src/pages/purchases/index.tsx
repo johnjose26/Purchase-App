@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks.ts';
 import Table from '../../components/table/index.tsx';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import Toast from 'react-bootstrap/Toast';
+import { handleMessage,handleHide } from '../../redux/toastSlice.ts';
 
 
 
@@ -17,8 +17,7 @@ const PagePurchases = () => {
     const [show, setShow] = useState<boolean>(false);
     const purchaseList = useAppSelector((state) => state.purchases.purchaseList);
     console.log(purchaseList);
-    const [showToast, setShowToast] = useState<boolean>(false); // Toast
-    const [toastMessage, setToastMessage] = useState<string | null>(null); // Toast Message
+   
 
     useEffect(() => {
         reduxDispatch(getPurchases())
@@ -31,17 +30,20 @@ const PagePurchases = () => {
             reduxDispatch(deletePurchase(selectedProductId))
                 .then((data) => {
                     if (data.payload.data.status === 200) {
-                        setShowToast(true);
+                        reduxDispatch(handleMessage("Purchase Deleted"));
+                        setTimeout(()=>{
+                            reduxDispatch(handleHide());
+                           
+                        },1000);
                         reduxDispatch(getPurchases());
-                        setToastMessage("Purchase deleted");
-
-                        setTimeout(() => {
-                            setShowToast(false);
-
-                        }, 2000);
+                      
                         handleClose();
                     } else {
-                        console.error("Failed to delete purchase.");
+                        reduxDispatch(handleMessage(data.payload.data.message));
+                        setTimeout(()=>{
+                            reduxDispatch(handleHide());
+                           
+                        },1000);
                     }
                 });
         }
@@ -111,9 +113,7 @@ const PagePurchases = () => {
             <Table columns={columns} data={purchaseList} />
 
 
-            <Toast className='toast-container' show={showToast} onClose={() => setShowToast(false)}>
-                <Toast.Body> {toastMessage} </Toast.Body>
-            </Toast>
+           
         </div>
 
     );
