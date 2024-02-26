@@ -3,13 +3,17 @@ import './index.scss';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks.ts';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import { logOut } from '../../redux/authSlice.ts';
-import { BrowserRouter, Routes, Route,Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 
 const MobileHeader = () => {
     const reduxDispatch = useAppDispatch();
     const { userDetails } = useAppSelector(state => state.auth);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const location = useLocation();
+    const [currentPath, setCurrentPath] = useState(location.pathname);
+  
+    
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -38,6 +42,8 @@ const MobileHeader = () => {
                 </nav>
             </div>
 
+
+
             {isMenuOpen && (
                 <>
                     <div className='mobile-overlay' onClick={toggleMenu}> </div>
@@ -47,28 +53,28 @@ const MobileHeader = () => {
                         </div>
                         <div className='menu-item-container'>
                             <div className='menu-item'>
-                            <Link to='/'> <span className="material-symbols-outlined">
+                                <Link to='/' className={currentPath === '/' ? 'active' : ''} onClick={() => setCurrentPath('/')}> <span className="material-symbols-outlined">
                                     home
                                 </span>
-                                <span> Home </span></Link>
+                                    <span> Home </span></Link>
                             </div>
-                            {userDetails && userDetails.type === 1 &&  ( <div className='menu-item'>
-                            <Link to='/users'>  <span className="material-symbols-outlined">
+                            {userDetails && userDetails.type === 1 && (<div className='menu-item'>
+                                <Link to='/users' className={currentPath === '/users' ? 'active' : ''} onClick={() => setCurrentPath('/users')}>  <span className="material-symbols-outlined">
                                     group
                                 </span>
-                                <span> Users </span></Link>
+                                    <span> Users </span></Link>
                             </div>)}
                             <div className='menu-item'>
-                            <Link to='/products'> <span className="material-symbols-outlined">
+                                <Link to='/products' className={currentPath === '/products' ? 'active' : ''} onClick={() => setCurrentPath('/products')}> <span className="material-symbols-outlined">
                                     category
                                 </span>
-                                <span> Products </span></Link>
+                                    <span> Products </span></Link>
                             </div>
                             <div className='menu-item'>
-                            <Link to='/purchases'> <span className="material-symbols-outlined">
+                                <Link to='/purchases' className={currentPath === '/purchases' ? 'active' : ''} onClick={() => setCurrentPath('/purchases')}> <span className="material-symbols-outlined">
                                     local_mall
                                 </span>
-                                <span> Purchases </span></Link>
+                                    <span> Purchases </span></Link>
                             </div>
                         </div>
                     </div>
@@ -78,5 +84,7 @@ const MobileHeader = () => {
         </>
     );
 };
+
+
 
 export default MobileHeader;

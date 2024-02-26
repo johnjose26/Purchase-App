@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, {  useReducer, useState } from 'react';
 import "./index.scss";
 import { Link, useNavigate } from 'react-router-dom';
 import { signup } from '../../redux/authSlice.ts';
@@ -36,15 +36,14 @@ const initialState: State = {
  
 const Form = ({onHide=()=>{}}) => {
  
-    const {userDetails, jwt } = useAppSelector(state => state.auth);
+    const {userDetails} = useAppSelector(state => state.auth);
     console.log(userDetails);
     const navigate = useNavigate();
     const reduxDispatch = useAppDispatch();
     const [state, dispatch] = useReducer(reducer, initialState);
     const { username, password, firstname, lastname, confirmPassword, type } = state;
-   
     const [error, setError] = useState<string>('');
-    // console.log(type);
+  
 
 
   
@@ -85,20 +84,21 @@ const Form = ({onHide=()=>{}}) => {
                             reduxDispatch(handleMessage("User Added"));
                             setTimeout(()=>{
                                 reduxDispatch(handleHide());
-                                navigate("/")
+                                navigate("/");
                             },1000)
                         } else {
                             setError(data.payload.data.message);
-                          }
+                        }
                     }
-                ); 
-        } }
+                ) 
+            }
+        }
         else{
            setError("Password doesn't match");
         }
         
 
-    };
+    }
  
    
     return (
@@ -130,13 +130,13 @@ const Form = ({onHide=()=>{}}) => {
                 </label>
                
 
-            {userDetails && userDetails.type === 1 && 
+            { userDetails && userDetails.type === 1 && 
              <label className='form-group'>
                 <div className='form-label'> User Type </div>
                 <input  type="radio" value="1" checked={type === 1} onChange={e => dispatch({ type : 1})}  /> Admin
                 <input style={{marginLeft: "30px"}} type="radio" value="2"  checked={type === 2} onChange={e => dispatch({ type: 2 })}  /> User
             </label>
-        }
+            }
                
                 <div className='signup-footer'>
                     <Link to="/"> Login </Link>
@@ -147,7 +147,7 @@ const Form = ({onHide=()=>{}}) => {
             
         </>
  
-    );
-};
+    )
+}
  
 export default Form;
